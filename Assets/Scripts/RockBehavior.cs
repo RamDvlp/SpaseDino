@@ -14,6 +14,7 @@ public class RockBehavior : MonoBehaviour
     private float rotationSize = 90f;
     private int angledir = -1;
     //public GameObject spr;
+    public GameObject curentMeteo;
     
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class RockBehavior : MonoBehaviour
         {
             currentSwipes = 0;
             lightSaber.GetComponent<LightSaberMoveWithMouse>().updateScore();
+            curentMeteo.GetComponent<RunTimeMeteoManager>().removeMeteo(this.gameObject);
             Destroy(gameObject);
             
         }

@@ -12,7 +12,6 @@ public class LightSaberMoveWithMouse : MonoBehaviour
     private int currentScore = 0;
     public TextMeshProUGUI score;
     public GameObject lightSaber;
-    private bool isMoved = false;
     private Quaternion originalRotation;
 
     // Start is called before the first frame update
@@ -29,22 +28,18 @@ public class LightSaberMoveWithMouse : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             MoveObject(touch.position);
-            isMoved = true;
+            
         }
         else if (Input.GetMouseButton(0))
         {
             MoveObject(Input.mousePosition);
-            isMoved = true;
+        
         }
         else
         {
             MoveObject(new Vector2(100,100));
             transform.rotation = originalRotation;
-            //transform.LocalRotate = Quaternion.Euler(0,0,-45);
-            if (!isMoved)
-            {
-                
-            }
+            
             
         }
     }

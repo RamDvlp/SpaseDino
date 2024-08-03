@@ -15,8 +15,8 @@ public class SpawnMeneger : MonoBehaviour
     public float spawnRange = 10f;
     private float timer;
     private bool gameover = false;
-    private ArrayList curenMeteo;
     public GameObject logoGameOver;
+    public GameObject meteorsList;
 
 
     private float randomX;
@@ -31,7 +31,6 @@ public class SpawnMeneger : MonoBehaviour
     void Start()
     {
         timer = spawnInterval; // Initialize timer to spawn the first meteor
-        curenMeteo = new ArrayList();
     }
 
     void Update()
@@ -72,18 +71,21 @@ public class SpawnMeneger : MonoBehaviour
         } 
         else
         {
-            curenMeteo.Clear();
-            if (curenMeteo.Count > 0)
+            ArrayList lst = meteorsList.GetComponent<RunTimeMeteoManager>().getMeteos();
+            if (lst.Count > 0)
             {
-                foreach (GameObject meteo in curenMeteo)
+                foreach (GameObject meteo in lst)
                 {
+                    
+                    // TODO add with exploation animation
                     meteo.SetActive(false);
                 }
             }
+            meteorsList.GetComponent<RunTimeMeteoManager>().removeAllRemaining();
+
             
-            curenMeteo.Clear();
         }
-        
+
     }
 
     private void spawnBoss()
@@ -101,10 +103,6 @@ public class SpawnMeneger : MonoBehaviour
         
     }
 
-    public void clearCurent(GameObject other)
-    {
-        curenMeteo.Remove(other);
-    }
 
     void SpawnMeteor()
     {
@@ -120,12 +118,13 @@ public class SpawnMeneger : MonoBehaviour
              newMeteor.GetComponent<Rigidbody>().velocity = moveDirection * meteorSpeed;
         }
         */
-         randomX = Random.Range(-spawnRange, spawnRange); // Randomize the X position
+         randomX = Random.Range(-spawnRange, spawnRange); // Randomize the X position for spawn
          spawnPosition = new Vector3(randomX, earth.position.y + spawnHeight, -2);
-         newMeteor = Instantiate(meteorPrefab, spawnPosition, Quaternion.identity);
-         moveDirection = ((earth.position + new Vector3(0,0,-5)) - newMeteor.transform.position).normalized;
+         newMeteor = Instantiate(meteorPrefab, spawnPosition, Quaternion.identity); // create a new meteorite
+         moveDirection = ((earth.position + new Vector3(0,0,-5)) - newMeteor.transform.position).normalized; // fall toward earth
          newMeteor.GetComponent<Rigidbody>().velocity = moveDirection * meteorSpeed;
-        //curenMeteo.Add(newMeteor);
+        // curenMeteo.Add(newMeteor);
+         meteorsList.GetComponent<RunTimeMeteoManager>().addMeteo(newMeteor);
     }
 
 }

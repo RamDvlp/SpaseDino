@@ -42,7 +42,8 @@ public class EarthHit : MonoBehaviour
             }
                 if (other.gameObject.GetComponent<RockBehavior>())
                 {
-                //spawnManager.GetComponent<SpawnMeneger>().clearCurent(other.gameObject);
+                
+                spawnManager.GetComponent<SpawnMeneger>().meteorsList.GetComponent<RunTimeMeteoManager>().removeMeteo(other.gameObject);
                 Destroy(other.gameObject);
 
                 }
