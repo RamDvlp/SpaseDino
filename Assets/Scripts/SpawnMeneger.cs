@@ -80,7 +80,6 @@ public class SpawnMeneger : MonoBehaviour
 
     private void spawnBoss()
     {
-        //randomX = Random.Range(-spawnRange, spawnRange); // Randomize the X position for spawn
         spawnPosition = new Vector3(0, earth.position.y + spawnHeight + 5, -2);
         newMeteor = Instantiate(bossPrefab, spawnPosition, Quaternion.identity); // create a new meteorite
         moveDirection = ((earth.position + new Vector3(0, 0, -5)) - newMeteor.transform.position).normalized; // fall toward earth

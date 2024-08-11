@@ -44,7 +44,6 @@ public class EarthHit : MonoBehaviour
                 {
                 
                 spawnManager.GetComponent<SpawnMeneger>().meteorsList.GetComponent<RunTimeMeteoManager>().removeMeteo(other.gameObject);
-                //Destroy(other.gameObject);
 
                 }
             }
@@ -57,7 +56,6 @@ public class EarthHit : MonoBehaviour
             }
             spawnManager.GetComponent<SpawnMeneger>().gameOver();
             spawnManager.GetComponent<SpawnMeneger>().meteorsList.GetComponent<RunTimeMeteoManager>().removeMeteo(other.gameObject);
-            //Destroy(other.gameObject);
 
         }
         if (other.gameObject.CompareTag("Human") && lifeCount <= 3)

@@ -12,7 +12,7 @@ public class LightSaberMoveWithMouse : MonoBehaviour
     public int scoreBoss = 100;
     private int currentScore = 0;
     public TextMeshProUGUI score;
-    public GameObject lightSaber;
+
     private Quaternion originalRotation;
 
     // Start is called before the first frame update

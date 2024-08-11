@@ -13,7 +13,6 @@ public class RockBehavior : MonoBehaviour
     private bool isIn = false;
     private float rotationSize = 90f;
     private int angledir = -1;
-    //public GameObject spr;
     public GameObject curentMeteo;
     private Quaternion originalRotation;
     
@@ -35,7 +34,6 @@ public class RockBehavior : MonoBehaviour
         {
             rotationSize = -90;
         }
-        //float totalRot = isIn ? 90 : -90; //angledir * rotationSize;
         angledir = angledir * (-1);
         lightSaber.transform.Rotate(0, 0, rotationSize);
         
@@ -76,7 +74,7 @@ public class RockBehavior : MonoBehaviour
         } 
         else
         {
-            transform.rotation = Quaternion.Euler(new Vector3(0, -85, 0));//originalRotation;
+            transform.rotation = Quaternion.Euler(new Vector3(0, -85, 0));
         }
 
     }
