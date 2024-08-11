@@ -40,7 +40,15 @@ public class RockBehavior : MonoBehaviour
         if (currentSwipes >= requiredSwipes)
         {
             currentSwipes = 0;
-            lightSaber.GetComponent<LightSaberMoveWithMouse>().updateScore();
+            if(requiredSwipes >= 5) // meaning its a boss
+            {
+                lightSaber.GetComponent<LightSaberMoveWithMouse>().updateBossScore();
+                curentMeteo.GetComponent<RunTimeMeteoManager>().isBossOut = false;
+            }
+            else
+            {
+                lightSaber.GetComponent<LightSaberMoveWithMouse>().updateScore();
+            }
             curentMeteo.GetComponent<RunTimeMeteoManager>().removeMeteo(this.gameObject);
             Destroy(gameObject);
             

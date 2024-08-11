@@ -5,6 +5,7 @@ using UnityEngine;
 public class RunTimeMeteoManager : MonoBehaviour
 {
     private ArrayList curentMeteo;
+    public bool isBossOut = false;
 
     // Start is called before the first frame update
     void Start()

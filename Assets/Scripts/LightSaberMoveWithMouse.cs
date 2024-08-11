@@ -9,6 +9,7 @@ public class LightSaberMoveWithMouse : MonoBehaviour
 {
     public Camera gameCamera;
     public int scoreBase = 10;
+    public int scoreBoss = 100;
     private int currentScore = 0;
     public TextMeshProUGUI score;
     public GameObject lightSaber;
@@ -56,5 +57,12 @@ public class LightSaberMoveWithMouse : MonoBehaviour
         currentScore += scoreBase;
         score.text = "Score : " + currentScore;
         
+    }
+
+    internal void updateBossScore()
+    {
+        currentScore += scoreBoss;
+        score.text = "Score : " + currentScore;
+
     }
 }

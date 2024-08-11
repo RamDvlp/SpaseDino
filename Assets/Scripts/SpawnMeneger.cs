@@ -23,6 +23,7 @@ public class SpawnMeneger : MonoBehaviour
     private Vector3 spawnPosition;
     private GameObject newMeteor;
     private Vector3 moveDirection;
+    private bool isSpawnBOSS = false;
 
     private int count = 0;
 
@@ -38,38 +39,25 @@ public class SpawnMeneger : MonoBehaviour
         if (gameover == false)
         {
             timer -= Time.deltaTime;
-            if (timer <= 0)
+            if (timer <= 0 && meteorsList.GetComponent<RunTimeMeteoManager>().isBossOut == false)
             {
-                
+
+                if(meteorsList.GetComponent<RunTimeMeteoManager>().isBossOut == false)
+                {
                     SpawnMeteor();
-
-
-                if (spawnInterval >= 1.0)
-                {
+                    if(isSpawnBOSS)
+                    {
+                        isSpawnBOSS = false;
+                        spawnInterval = 1f;
+                        spawnBoss();
+                    }
                     
-                    spawnInterval -= 0.05f;
                 }
-                else
-                {
-                    if(spawnInterval > 0.6 & spawnInterval < 1.0)
-                    {
-                        spawnInterval -= 0.02f;
-                    }
-                    else
-                    {
-                        count++;
-                        if(count == 15)
-                        {
-                            spawnBoss();
-                            count = 0;
-                            spawnInterval = 100;
-                        }
-                    }
-                }
+
                 timer = spawnInterval;
             }
         } 
-        else
+        else // game over
         {
             ArrayList lst = meteorsList.GetComponent<RunTimeMeteoManager>().getMeteos();
             if (lst.Count > 0)
@@ -84,13 +72,20 @@ public class SpawnMeneger : MonoBehaviour
             meteorsList.GetComponent<RunTimeMeteoManager>().removeAllRemaining();
 
             
-        }
+        } // game over
 
     }
 
     private void spawnBoss()
     {
-        throw new System.NotImplementedException();
+        //randomX = Random.Range(-spawnRange, spawnRange); // Randomize the X position for spawn
+        spawnPosition = new Vector3(0, earth.position.y + spawnHeight + 5, -2);
+        newMeteor = Instantiate(bossPrefab, spawnPosition, Quaternion.identity); // create a new meteorite
+        moveDirection = ((earth.position + new Vector3(0, 0, -5)) - newMeteor.transform.position).normalized; // fall toward earth
+        newMeteor.GetComponent<Rigidbody>().velocity = moveDirection * meteorSpeed/3;
+        meteorsList.GetComponent<RunTimeMeteoManager>().addMeteo(newMeteor);
+
+        meteorsList.GetComponent<RunTimeMeteoManager>().isBossOut = true;
     }
 
     public void gameOver()
@@ -123,8 +118,30 @@ public class SpawnMeneger : MonoBehaviour
          newMeteor = Instantiate(meteorPrefab, spawnPosition, Quaternion.identity); // create a new meteorite
          moveDirection = ((earth.position + new Vector3(0,0,-5)) - newMeteor.transform.position).normalized; // fall toward earth
          newMeteor.GetComponent<Rigidbody>().velocity = moveDirection * meteorSpeed;
-        // curenMeteo.Add(newMeteor);
          meteorsList.GetComponent<RunTimeMeteoManager>().addMeteo(newMeteor);
+
+        if (spawnInterval >= 1.0)
+        {
+
+            spawnInterval -= 0.05f;
+        }
+        else
+        {
+            if (spawnInterval > 0.9 & spawnInterval < 1.0)
+            {
+                spawnInterval -= 0.02f;
+            }
+            else
+            {
+                count++;
+                if (count == 5)
+                {
+                    isSpawnBOSS = true;
+                    count = 0;
+                }
+
+            }
+        }
     }
 
 }

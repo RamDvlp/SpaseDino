@@ -48,6 +48,18 @@ public class EarthHit : MonoBehaviour
 
                 }
             }
+        if (other.gameObject.CompareTag("BossMeteo"))
+        {
+            while (lifeCount > 0)
+            {
+                lifeCount--;
+                Life.transform.Find(lifeIcon[lifeCount]).gameObject.SetActive(false);
+            }
+            spawnManager.GetComponent<SpawnMeneger>().gameOver();
+            spawnManager.GetComponent<SpawnMeneger>().meteorsList.GetComponent<RunTimeMeteoManager>().removeMeteo(other.gameObject);
+            Destroy(other.gameObject);
+
+        }
             
         
     }
