@@ -15,12 +15,14 @@ public class RockBehavior : MonoBehaviour
     private int angledir = -1;
     //public GameObject spr;
     public GameObject curentMeteo;
+    private Quaternion originalRotation;
     
     // Start is called before the first frame update
     void Start()
     {
         direction = Random.Range(-10, 10);
         direction = direction / Mathf.Abs(direction);
+        originalRotation = transform.rotation;
     }
 
     public void handleSwipes()
@@ -39,6 +41,13 @@ public class RockBehavior : MonoBehaviour
         
         if (currentSwipes >= requiredSwipes)
         {
+            // TODO - substitute with switch case
+            if (requiredSwipes == 1) // meaning human
+            {
+                curentMeteo.GetComponent<RunTimeMeteoManager>().removeMeteo(this.gameObject);
+                Destroy(gameObject);
+                return; // do not update score
+            }
             currentSwipes = 0;
             if(requiredSwipes >= 5) // meaning its a boss
             {
@@ -59,11 +68,17 @@ public class RockBehavior : MonoBehaviour
     void Update()
     {
         checkLightSaberHit();
+        if (!gameObject.CompareTag("Human")) 
+        { 
         transform.Rotate(Vector3.up, 50 * Time.deltaTime * direction, Space.World);
         transform.Rotate(Vector3.right, 50 * Time.deltaTime * direction, Space.World);
         transform.Rotate(Vector3.forward, 50 * Time.deltaTime * direction, Space.World);
-        
-       
+        } 
+        else
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, -85, 0));//originalRotation;
+        }
+
     }
 
     private void checkLightSaberHit()
