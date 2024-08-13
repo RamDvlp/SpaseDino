@@ -40,12 +40,7 @@ public class EarthHit : MonoBehaviour
                 spawnManager.GetComponent<SpawnMeneger>().gameOver();
 
             }
-                if (other.gameObject.GetComponent<RockBehavior>())
-                {
                 
-                spawnManager.GetComponent<SpawnMeneger>().meteorsList.GetComponent<RunTimeMeteoManager>().removeMeteo(other.gameObject);
-
-                }
             }
         if (other.gameObject.CompareTag("BossMeteo"))
         {
@@ -55,7 +50,7 @@ public class EarthHit : MonoBehaviour
                 Life.transform.Find(lifeIcon[lifeCount]).gameObject.SetActive(false);
             }
             spawnManager.GetComponent<SpawnMeneger>().gameOver();
-            spawnManager.GetComponent<SpawnMeneger>().meteorsList.GetComponent<RunTimeMeteoManager>().removeMeteo(other.gameObject);
+            
 
         }
         if (other.gameObject.CompareTag("Human") && lifeCount <= 3)
@@ -64,7 +59,7 @@ public class EarthHit : MonoBehaviour
             lifeCount++;
            
         }
-
+        spawnManager.GetComponent<SpawnMeneger>().meteorsList.GetComponent<RunTimeMeteoManager>().removeMeteo(other.gameObject);
         Destroy(other.gameObject);
     }
 }

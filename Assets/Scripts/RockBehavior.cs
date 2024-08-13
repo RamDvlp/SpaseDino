@@ -39,6 +39,7 @@ public class RockBehavior : MonoBehaviour
         
         if (currentSwipes >= requiredSwipes)
         {
+            currentSwipes = 0;
             // TODO - substitute with switch case
             if (requiredSwipes == 1) // meaning human
             {
@@ -46,7 +47,7 @@ public class RockBehavior : MonoBehaviour
                 Destroy(gameObject);
                 return; // do not update score
             }
-            currentSwipes = 0;
+            
             if(requiredSwipes >= 5) // meaning its a boss
             {
                 lightSaber.GetComponent<LightSaberMoveWithMouse>().updateBossScore();
