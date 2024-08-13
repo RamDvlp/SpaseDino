@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class SpawnMeneger : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class SpawnMeneger : MonoBehaviour
     public GameObject logoGameOver;
     public GameObject meteorsList;
     private float randomHuman;
+    public GameObject restartBTN;
 
 
     private float randomX;
@@ -72,7 +74,7 @@ public class SpawnMeneger : MonoBehaviour
                 }
             }
             meteorsList.GetComponent<RunTimeMeteoManager>().removeAllRemaining();
-
+            restartBTN.SetActive(true);
             
         } // game over
 
@@ -132,7 +134,7 @@ public class SpawnMeneger : MonoBehaviour
         }
         else
         {
-            if (spawnInterval > 0.9 & spawnInterval < 1.0)
+            if (spawnInterval > 0.7 & spawnInterval < 1.0)
             {
                 spawnInterval -= 0.02f;
             }
@@ -149,4 +151,9 @@ public class SpawnMeneger : MonoBehaviour
         }
     }
 
+    public void restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
+
